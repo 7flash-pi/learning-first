@@ -19,6 +19,7 @@ public class todoModel {
 
     @NotEmpty
     private String description;
+    
     private boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
@@ -27,7 +28,7 @@ public class todoModel {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.createdAt = createdAt;
+        this.createdAt = createdAt ;
         this.deletedAt = deletedAt;
         this.isActive = isActive;
 

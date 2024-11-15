@@ -1,7 +1,6 @@
 package com.learning.learning_first.services;
 
-
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,13 +28,28 @@ public class TodoService {
 
     // Save a new todo or update an existing one
     public todoModel saveTodo(todoModel todo) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        todo.setCreatedAt(currentDateTime);
+        todo.setDeletedAt(null);
         return todoRepository.save(todo);
     }
 
     // Delete a todo by ID
-   
-    public void deleteTodoById(String id) {
-        todoRepository.deleteById(id);
+
+    public boolean deleteTodoById(String id) {
+        Optional<todoModel> optionalTodo = getTodoById(id);
+        optionalTodo.ifPresent(todo -> {
+            // Set deletedAt to the current date and time
+            todo.setDeletedAt(LocalDateTime.now());
+            todo.setIsActive(false);
+            todoRepository.save(todo);
+        });
+        if(optionalTodo.isPresent())
+            return true;
+        else
+            return  false;
+    
+
     }
 
     // Find todos by their completed status
@@ -48,4 +62,3 @@ public class TodoService {
         return todoRepository.findByTitle(title);
     }
 }
-
