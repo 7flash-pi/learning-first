@@ -5,14 +5,14 @@ public class ApiResponse<T> {
 
     private String statusMessage;
     private T data;
-    
-    public ApiResponse ( int statusCode, String statusMessage,T data){
+
+    public ApiResponse(int statusCode, String statusMessage, T data) {
         this.statusCode = statusCode;
         this.statusMessage = statusMessage;
         this.data = data;
     }
 
-    //Getter and setters
+    // Getter and setters
 
     public String getStatusMessage() {
         return statusMessage;
@@ -38,5 +38,4 @@ public class ApiResponse<T> {
         this.statusCode = statusCode;
     }
 
-    
 }

@@ -5,10 +5,6 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-
-
-
-
 public class todoModel {
 
     @NotNull
@@ -19,16 +15,17 @@ public class todoModel {
 
     @NotEmpty
     private String description;
-    
+
     private boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
 
-    public todoModel(String id,String title,String description,boolean isActive,LocalDateTime createdAt,LocalDateTime deletedAt){
+    public todoModel(String id, String title, String description, boolean isActive, LocalDateTime createdAt,
+            LocalDateTime deletedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.createdAt = createdAt ;
+        this.createdAt = createdAt;
         this.deletedAt = deletedAt;
         this.isActive = isActive;
 
@@ -81,6 +78,5 @@ public class todoModel {
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
-    
-    
+
 }

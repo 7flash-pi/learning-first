@@ -44,11 +44,10 @@ public class TodoService {
             todo.setIsActive(false);
             todoRepository.save(todo);
         });
-        if(optionalTodo.isPresent())
+        if (optionalTodo.isPresent())
             return true;
         else
-            return  false;
-    
+            return false;
 
     }
 
