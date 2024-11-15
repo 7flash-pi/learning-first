@@ -34,6 +34,10 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
+    public todoModel updateTodo(todoModel todo) {
+        return todoRepository.save(todo);
+    }
+
     // Delete a todo by ID
 
     public boolean deleteTodoById(String id) {
@@ -60,4 +64,6 @@ public class TodoService {
     public Optional<todoModel> getTodoByTitle(String title) {
         return todoRepository.findByTitle(title);
     }
+
+    
 }

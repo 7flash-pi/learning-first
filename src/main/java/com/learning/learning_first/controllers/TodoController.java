@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -98,6 +99,48 @@ public class TodoController {
                     "Failed",
                     null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
+    @PutMapping("/todos/{id}")
+    public ResponseEntity<ApiResponse<todoModel>> updateTodoById(
+            @PathVariable String id,
+            @RequestBody todoModel updatedTodo) {
+        try {
+            // Step 1: Check if the Todo exists
+            Optional<todoModel> existingTodo = todoService.getTodoById(id);
+
+            if (existingTodo.isPresent() && existingTodo.get().isIsActive() != false) {
+                todoModel todo = existingTodo.get();
+                todo.setTitle(updatedTodo.getTitle());
+                todo.setDescription(updatedTodo.getDescription());
+                todo.setIsActive(updatedTodo.isIsActive());
+                todo.setCreatedAt(updatedTodo.getCreatedAt());
+
+                // Step 3: Save the updated Todo
+                todoModel savedTodo = todoService.updateTodo(todo);
+
+                // Step 4: Return the updated Todo with HTTP 200 OK
+                ApiResponse<todoModel> response = new ApiResponse<>(
+                        HttpStatus.OK.value(),
+                        "Todo updated successfully",
+                        savedTodo);
+                return ResponseEntity.ok(response);
+            } else {
+                // Step 5: Return HTTP 404 Not Found if the Todo doesn't exist
+                ApiResponse<todoModel> response = new ApiResponse<>(
+                        HttpStatus.NOT_FOUND.value(),
+                        "Todo not found with id: " + id,
+                        null);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        } catch (Exception e) {
+            // Step 6: Handle any errors with HTTP 400 Bad Request
+            ApiResponse<todoModel> response = new ApiResponse<>(
+                    HttpStatus.BAD_REQUEST.value(),
+                    "Failed to update todo: " + e.getMessage(),
+                    null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
